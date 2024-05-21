@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "280404827865",
+    "project_id": "monapp-eacdf",
+    "storage_bucket": "monapp-eacdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280404827865:android:13bc99cdd54b9a7d5c28c8",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGocIdoDwrGDDglFdM9gr2LHKc4yPqhGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
