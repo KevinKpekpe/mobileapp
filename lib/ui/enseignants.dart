@@ -3,8 +3,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/model/enseignant.dart';
 import 'package:myapp/ui/chargement.dart';
 import 'package:myapp/ui/enseignant.dart';
+import 'package:myapp/ui/enseignant_details.dart';
 import 'package:myapp/ui/eror.dart';
 import 'package:myapp/utilis/utilis.dart';
 
@@ -35,6 +37,17 @@ class EnseignantsPage extends StatelessWidget {
         body: ListView(
           children: snapshot.data!.docs.map((document){
             return ListTile(
+              onTap:(){
+              Enseignant enseignant = Enseignant(
+                matricule :document["matricule"],
+                nom:  document["nom"],
+                prenom:  document["prenom"],
+                contact:  document["contact"],
+                email:  document["email"],
+                specialite:  document["specialite"]
+              );
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EnseignantDetailsPage(enseignant: enseignant,)));
+              } ,
               title: Text(document["nom" ] + document['prenom']),
               subtitle: Text(document["contact"]),
             );
