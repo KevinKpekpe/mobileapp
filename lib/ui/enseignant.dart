@@ -1,6 +1,9 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, prefer_const_constructors, unused_local_variable, no_leading_underscores_for_local_identifiers
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:myapp/controller/enseingnant_controller.dart';
 
 class TeacherPage extends StatefulWidget {
@@ -18,6 +21,11 @@ class _TeacherPageState extends State<TeacherPage> {
   late TextEditingController phoneController;
   late TextEditingController mailController ;
 
+  File? _image;
+  final _imagePicker = ImagePicker();
+
+
+
   final GlobalKey<ScaffoldState> myKey = GlobalKey();
   @override
   void initState() {
@@ -29,8 +37,8 @@ class _TeacherPageState extends State<TeacherPage> {
     specialityController = TextEditingController();
     phoneController = TextEditingController();
     mailController = TextEditingController();
+    _image = File("");
   }
-
   reset(){
     matriculeController.clear();
     nameController.clear();
@@ -38,6 +46,15 @@ class _TeacherPageState extends State<TeacherPage> {
     mailController.clear();
     phoneController.clear();
     lastnameController.clear();
+  }
+  Future <void> getImage() async{
+    final XFile? _imageXfile = await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if(_imageXfile != null){
+      setState(() {
+        _image = File(_imageXfile.path);
+      });
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -55,6 +72,24 @@ class _TeacherPageState extends State<TeacherPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: 30,),
+              Container(
+                  width: MediaQuery.of(context).size.height *50,
+                  height: MediaQuery.of(context).size.height * 0.150,
+                  child: InkWell(
+                    onTap: (){
+                      getImage();
+                    },
+                    child: CircleAvatar(
+                      radius: 50,
+                      child: _image != null ? Image.file(_image!) : Image.asset(
+                      "images/avatar.png",
+                      height: 100,
+                      width: 100,
+                    ),
+                    ),
+                  ),
+              ),
               const SizedBox(height: 10),
               TextField(
                 controller: matriculeController,
@@ -148,7 +183,7 @@ class _TeacherPageState extends State<TeacherPage> {
       String phone = phoneController.text;
       String email = mailController.text.toLowerCase();
       EnseignantController ense = EnseignantController();
-      var reponse = ense.enregistrerEnseignant(matricule, nom, prenom, specialite, phone, email);
+      var reponse = ense.enregistrerEnseignant(matricule, nom, prenom, specialite, phone, email,_image!);
 
       if(reponse=="Reussie"){
         showMessageDialog("Operation reussie");
